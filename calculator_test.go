@@ -83,6 +83,28 @@ func TestStrctSizeInBytesOfTypes(t *testing.T) {
 			item: struct{ BoolField bool }{BoolField: true},
 			want: 9 + 1,
 		},
+		{
+			typ:  "byte",
+			item: struct{ ByteField byte }{ByteField: 123},
+			want: 9 + 3,
+		},
+		{
+			// []byte will be marshaled as Binary data (B)
+			typ:  "[]byte",
+			item: struct{ BytesField []byte }{BytesField: []byte{1, 2, 3}},
+			want: 13,
+		},
+		{
+			// [][]byte will be marshaled as Binary Set data (BS)
+			typ: "[][]byte",
+			item: struct{ BytesField [][]byte }{
+				BytesField: [][]byte{
+					{1, 2, 3},
+					{4, 5, 6},
+				},
+			},
+			want: 16,
+		},
 	}
 
 	for _, tt := range tests {
