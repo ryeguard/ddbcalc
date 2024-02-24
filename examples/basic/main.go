@@ -1,12 +1,3 @@
-# ddbcalc
-
-A DynamoDB item size calculator
-
-## Usage
-
-The `StructSizeInBytes` function calculates the size of a struct in bytes. It may be used as follows:
-
-```go
 package main
 
 import (
@@ -38,12 +29,3 @@ func main() {
 
 	fmt.Printf("Item size: %d bytes\n", size)
 }
-```
-
-You can run the example above with the following command:
-
-```sh
-go run example/basic/main.go
-```
-
-For more examples, see the [examples](./examples) directory and also check out the tests in all `*_test.go` files.
