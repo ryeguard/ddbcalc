@@ -66,10 +66,6 @@ func StructSizeInBytes(s interface{}) int {
 		panic(err)
 	}
 
-	enc := attributevalue.NewEncoder()
-
-	enc.Encode(s)
-
 	_av, ok := av.(*types.AttributeValueMemberM)
 	if !ok {
 		panic(fmt.Sprintf("expected map, got %T", av))
