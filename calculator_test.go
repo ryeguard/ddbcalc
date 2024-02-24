@@ -44,7 +44,10 @@ func TestStructSizeInBytes(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := StructSizeInBytes(tt.item)
+			got, err := StructSizeInBytes(tt.item)
+			if err != nil {
+				t.Fatal(err)
+			}
 			if got != tt.want {
 				t.Errorf("got %d; want %d", got, tt.want)
 			}
@@ -126,7 +129,10 @@ func TestStrctSizeInBytesOfTypes(t *testing.T) {
 				t.Errorf("got\n%s\n; want\n%s\n", gotJson, wantJson)
 			}
 
-			got := StructSizeInBytes(tt.item)
+			got, err := StructSizeInBytes(tt.item)
+			if err != nil {
+				t.Fatal(err)
+			}
 			if got != tt.want {
 				t.Errorf("got %d; want %d", got, tt.want)
 			}
