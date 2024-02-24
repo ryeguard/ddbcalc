@@ -61,18 +61,13 @@ func sizeInBytes(av *types.AttributeValue) int {
 }
 
 func StructSizeInBytes(s interface{}) int {
-	av, err := attributevalue.Marshal(s)
+	av, err := attributevalue.MarshalMap(s)
 	if err != nil {
 		panic(err)
 	}
 
-	_av, ok := av.(*types.AttributeValueMemberM)
-	if !ok {
-		panic(fmt.Sprintf("expected map, got %T", av))
-	}
-
 	size := 0
-	for k, v := range _av.Value {
+	for k, v := range av {
 		size += len([]byte(k))
 		size += sizeInBytes(&v)
 	}
