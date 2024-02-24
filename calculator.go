@@ -7,7 +7,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 )
 
-func sizeInBytes(av *types.AttributeValue) (int, error) {
+func SizeInBytes(av *types.AttributeValue) (int, error) {
 	if av == nil {
 		return 0, nil
 	}
@@ -30,7 +30,7 @@ func sizeInBytes(av *types.AttributeValue) (int, error) {
 	case *types.AttributeValueMemberL:
 		size := 3
 		for _, v := range _av.Value {
-			s, err := sizeInBytes(&v)
+			s, err := SizeInBytes(&v)
 			if err != nil {
 				return 0, err
 			}
@@ -42,7 +42,7 @@ func sizeInBytes(av *types.AttributeValue) (int, error) {
 		size := 3
 		for k, v := range _av.Value {
 			size += len([]byte(k))
-			s, err := sizeInBytes(&v)
+			s, err := SizeInBytes(&v)
 			if err != nil {
 				return 0, err
 			}
@@ -74,10 +74,14 @@ func StructSizeInBytes(s interface{}) (int, error) {
 		return 0, err
 	}
 
+	return MapSizeInBytes(av)
+}
+
+func MapSizeInBytes(m map[string]types.AttributeValue) (int, error) {
 	size := 0
-	for k, v := range av {
+	for k, v := range m {
 		size += len([]byte(k))
-		s, err := sizeInBytes(&v)
+		s, err := SizeInBytes(&v)
 		if err != nil {
 			return 0, err
 		}
