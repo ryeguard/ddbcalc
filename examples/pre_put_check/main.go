@@ -55,6 +55,9 @@ func main() {
 		}
 
 		fmt.Println("Item size:", size, "bytes")
+		// I wonder what the performance cost of this Is
+		// I think thsi really make sens to add to hologram if the performance cost is low
+		//  could do cool things as catching early or dynamically split objects.
 		if size > sizeLimit {
 			fmt.Printf("Item size is too large. Skipping item ID %v.", item.ID)
 			continue
@@ -62,7 +65,7 @@ func main() {
 		// we dont need the else statement
 		fmt.Printf("Item size is within limits. Writing item ID %v.", item.ID)
 
-		// What is the goal of this put?
+		// What is the goal of this put? I think the example would be fine wih a fmt.Print here or similar
 		// Should we check the error?
 		if _, err := PutItem(context.TODO(), client, &dynamodb.PutItemInput{
 			Item:      m,
