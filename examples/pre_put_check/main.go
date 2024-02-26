@@ -58,13 +58,18 @@ func main() {
 		if size > sizeLimit {
 			fmt.Printf("Item size is too large. Skipping item ID %v.", item.ID)
 			continue
-		} else {
-			fmt.Printf("Item size is within limits. Writing item ID %v.", item.ID)
 		}
+		// we dont need the else statement
+		fmt.Printf("Item size is within limits. Writing item ID %v.", item.ID)
 
-		PutItem(context.TODO(), client, &dynamodb.PutItemInput{
+		// What is the goal of this put?
+		// Should we check the error?
+		if _, err := PutItem(context.TODO(), client, &dynamodb.PutItemInput{
 			Item:      m,
 			TableName: aws.String("my-table"),
-		})
+		}); err != nil {
+			panic(err)
+		}
+
 	}
 }

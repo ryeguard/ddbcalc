@@ -7,6 +7,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 )
 
+// Do we need to export this see, comment below.
 func SizeInBytes(av *types.AttributeValue) (int, error) {
 	if av == nil {
 		return 0, nil
@@ -28,6 +29,7 @@ func SizeInBytes(av *types.AttributeValue) (int, error) {
 		}
 		return size, nil
 	case *types.AttributeValueMemberL:
+		// Why is the size 3 here? THis might be worth a comment.
 		size := 3
 		for _, v := range _av.Value {
 			s, err := SizeInBytes(&v)
@@ -35,10 +37,12 @@ func SizeInBytes(av *types.AttributeValue) (int, error) {
 				return 0, err
 			}
 			size += s
+			// Why do we plus 1 here?
 			size++
 		}
 		return size, nil
 	case *types.AttributeValueMemberM:
+		// Same comment as above
 		size := 3
 		for k, v := range _av.Value {
 			size += len([]byte(k))
@@ -47,6 +51,7 @@ func SizeInBytes(av *types.AttributeValue) (int, error) {
 				return 0, err
 			}
 			size += s
+			// Why do we plus 1 here?
 			size++
 		}
 		return size, nil
@@ -68,6 +73,8 @@ func SizeInBytes(av *types.AttributeValue) (int, error) {
 	}
 }
 
+// Is size enough as name?
+// I think name could be shorter if you add some a comment with some docs.
 func StructSizeInBytes(s interface{}) (int, error) {
 	av, err := attributevalue.MarshalMap(s)
 	if err != nil {
@@ -77,6 +84,9 @@ func StructSizeInBytes(s interface{}) (int, error) {
 	return MapSizeInBytes(av)
 }
 
+// Do you expect a user to access this function if not, do you want to export it?
+// Less exporter MIGHT make your life easier since you have not given access for users to in
+// so you can change it!
 func MapSizeInBytes(m map[string]types.AttributeValue) (int, error) {
 	size := 0
 	for k, v := range m {
