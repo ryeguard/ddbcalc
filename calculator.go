@@ -9,7 +9,32 @@ import (
 
 const SizeLimitInBytes = 400_000 // 400 KB
 
-func SizeInBytes(av *types.AttributeValue) (int, error) {
+// MapSizeInBytes returns the size of a map of AttributeValue in bytes.
+func MapSizeInBytes(m map[string]types.AttributeValue) (int, error) {
+	size := 0
+	for k, v := range m {
+		size += len([]byte(k))
+		s, err := sizeInBytes(&v)
+		if err != nil {
+			return 0, err
+		}
+		size += s
+	}
+	return size, nil
+}
+
+// StructSizeInBytes returns the size of a struct in bytes.
+// It is a convenience function as an alternative to first calling attributevalue.MarshalMap and then MapSizeInBytes.
+func StructSizeInBytes(s interface{}) (int, error) {
+	av, err := attributevalue.MarshalMap(s)
+	if err != nil {
+		return 0, err
+	}
+
+	return MapSizeInBytes(av)
+}
+
+func sizeInBytes(av *types.AttributeValue) (int, error) {
 	if av == nil {
 		return 0, nil
 	}
@@ -32,7 +57,7 @@ func SizeInBytes(av *types.AttributeValue) (int, error) {
 	case *types.AttributeValueMemberL:
 		size := 3
 		for _, v := range _av.Value {
-			s, err := SizeInBytes(&v)
+			s, err := sizeInBytes(&v)
 			if err != nil {
 				return 0, err
 			}
@@ -44,7 +69,7 @@ func SizeInBytes(av *types.AttributeValue) (int, error) {
 		size := 3
 		for k, v := range _av.Value {
 			size += len([]byte(k))
-			s, err := SizeInBytes(&v)
+			s, err := sizeInBytes(&v)
 			if err != nil {
 				return 0, err
 			}
@@ -68,26 +93,4 @@ func SizeInBytes(av *types.AttributeValue) (int, error) {
 	default:
 		return 0, fmt.Errorf("unknown type: %T", _av)
 	}
-}
-
-func StructSizeInBytes(s interface{}) (int, error) {
-	av, err := attributevalue.MarshalMap(s)
-	if err != nil {
-		return 0, err
-	}
-
-	return MapSizeInBytes(av)
-}
-
-func MapSizeInBytes(m map[string]types.AttributeValue) (int, error) {
-	size := 0
-	for k, v := range m {
-		size += len([]byte(k))
-		s, err := SizeInBytes(&v)
-		if err != nil {
-			return 0, err
-		}
-		size += s
-	}
-	return size, nil
 }
