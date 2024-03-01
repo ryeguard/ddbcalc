@@ -17,16 +17,16 @@ type Item struct {
 	Email string `dynamodbav:"email"`
 }
 
-const sizeLimit = 100
-
-func main() {
+func example() error {
+	const sizeLimit = 100              // Made up limit for this example.
+	const _ = ddbcalc.SizeLimitInBytes // In a real application, use the actual limit.
 
 	// A mock client is defined in the mock.go file.
 	// The mock client is used to make this example run without needing to connect to a real DynamoDB table.
 	client := newMockClient()
 
 	// A real client could be created like this, and used as-is with the PutItem function below.
-	// client := dynamodb.New(dynamodb.Options{Region: "us-west-2"})
+	_ = dynamodb.New(dynamodb.Options{Region: "us-west-2"})
 
 	items := []Item{
 		{
@@ -46,25 +46,35 @@ func main() {
 	for _, item := range items {
 		m, err := attributevalue.MarshalMap(item)
 		if err != nil {
-			panic("failed to marshal item")
+			return fmt.Errorf("marshalMap: %w", err)
 		}
 
 		size, err := ddbcalc.MapSizeInBytes(m)
 		if err != nil {
-			panic("failed to calculate size")
+			return fmt.Errorf("mapSizeInBytes: %w", err)
 		}
 
 		fmt.Println("Item size:", size, "bytes")
 		if size > sizeLimit {
 			fmt.Printf("Item size is too large. Skipping item ID %v.", item.ID)
 			continue
-		} else {
-			fmt.Printf("Item size is within limits. Writing item ID %v.", item.ID)
 		}
+		fmt.Printf("Item size is within limits. Writing item ID %v.", item.ID)
 
-		PutItem(context.TODO(), client, &dynamodb.PutItemInput{
+		_, err = PutItem(context.TODO(), client, &dynamodb.PutItemInput{
 			Item:      m,
 			TableName: aws.String("my-table"),
 		})
+		if err != nil {
+			return fmt.Errorf("putItem: %w", err)
+		}
+	}
+	return nil
+}
+
+func main() {
+	err := example()
+	if err != nil {
+		panic(err)
 	}
 }

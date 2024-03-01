@@ -7,6 +7,8 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 )
 
+const SizeLimitInBytes = 400_000 // 400 KB
+
 func SizeInBytes(av *types.AttributeValue) (int, error) {
 	if av == nil {
 		return 0, nil
