@@ -23,8 +23,7 @@ func main() {
 
 	size, err := ddbcalc.StructSizeInBytes(item)
 	if err != nil {
-		fmt.Println(err)
-		return
+		panic(err) // This is a basic example. In a real application, handle the error.
 	}
 
 	fmt.Printf("Item size: %d bytes\n", size)
