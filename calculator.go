@@ -41,9 +41,9 @@ func sizeInBytes(av *types.AttributeValue) (int, error) {
 
 	switch _av := (*av).(type) {
 	case *types.AttributeValueMemberS:
-		return len([]byte(_av.Value)), nil
+		return len(_av.Value), nil
 	case *types.AttributeValueMemberN:
-		return len([]byte(_av.Value)), nil
+		return len(_av.Value), nil
 	case *types.AttributeValueMemberB:
 		return len(_av.Value), nil
 	case *types.AttributeValueMemberBOOL, *types.AttributeValueMemberNULL:
@@ -68,7 +68,7 @@ func sizeInBytes(av *types.AttributeValue) (int, error) {
 	case *types.AttributeValueMemberM:
 		size := 3
 		for k, v := range _av.Value {
-			size += len([]byte(k))
+			size += len(k)
 			s, err := sizeInBytes(&v)
 			if err != nil {
 				return 0, err
@@ -81,7 +81,7 @@ func sizeInBytes(av *types.AttributeValue) (int, error) {
 	case *types.AttributeValueMemberNS:
 		size := 0
 		for _, v := range _av.Value {
-			size += len([]byte(v))
+			size += len(v)
 		}
 		return size, nil
 	case *types.AttributeValueMemberSS:
