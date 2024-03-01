@@ -9,6 +9,12 @@ import (
 
 const SizeLimitInBytes = 400_000 // 400 KB
 
+const (
+	overheadMemberM = 3 // 3 byte
+	overheadMemberL = 3 // 3 byte
+	overheadElement = 1 // 1 byte
+)
+
 // MapSizeInBytes returns the size of a map of AttributeValue in bytes.
 func MapSizeInBytes(m map[string]types.AttributeValue) (int, error) {
 	size := 0
@@ -55,18 +61,18 @@ func sizeInBytes(av *types.AttributeValue) (int, error) {
 		}
 		return size, nil
 	case *types.AttributeValueMemberL:
-		size := 3
+		size := overheadMemberL
 		for _, v := range _av.Value {
 			s, err := sizeInBytes(&v)
 			if err != nil {
 				return 0, err
 			}
 			size += s
-			size++
+			size += overheadElement
 		}
 		return size, nil
 	case *types.AttributeValueMemberM:
-		size := 3
+		size := overheadMemberM
 		for k, v := range _av.Value {
 			size += len(k)
 			s, err := sizeInBytes(&v)
@@ -74,7 +80,7 @@ func sizeInBytes(av *types.AttributeValue) (int, error) {
 				return 0, err
 			}
 			size += s
-			size++
+			size += overheadElement
 		}
 		return size, nil
 
