@@ -3,13 +3,12 @@ module github.com/ryeguard/ddbcalc
 go 1.22.0
 
 require (
-	github.com/aws/aws-sdk-go v1.50.25
+	github.com/aws/aws-sdk-go-v2 v1.25.0
 	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.13.2
 	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.29.0
 )
 
 require (
-	github.com/aws/aws-sdk-go-v2 v1.25.0 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/configsources v1.3.0 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.6.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/dynamodbstreams v1.19.1 // indirect
