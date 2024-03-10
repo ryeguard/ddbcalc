@@ -46,13 +46,17 @@ func sizeInBytes(av *types.AttributeValue) (int, error) {
 	}
 
 	switch _av := (*av).(type) {
+	case nil:
+		return 0, nil
 	case *types.AttributeValueMemberS:
 		return len(_av.Value), nil
 	case *types.AttributeValueMemberN:
 		return len(_av.Value), nil
 	case *types.AttributeValueMemberB:
 		return len(_av.Value), nil
-	case *types.AttributeValueMemberBOOL, *types.AttributeValueMemberNULL:
+	case *types.AttributeValueMemberBOOL:
+		return 1, nil
+	case *types.AttributeValueMemberNULL:
 		return 1, nil
 	case *types.AttributeValueMemberBS:
 		size := 0
