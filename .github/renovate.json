@@ -15,5 +15,8 @@
   ],
   "schedule": [
     "on sundays"
+  ],
+  "postUpdateOptions": [
+    "gomodTidy"
   ]
 }
