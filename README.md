@@ -1,6 +1,8 @@
 # ddbcalc
 
-A DynamoDB item size calculator
+[![Go Coverage](https://github.com/ryeguard/ddbcalc/wiki/coverage.svg)](https://raw.githack.com/wiki/ryeguard/ddbcalc/coverage.html)
+
+A DynamoDB item size calculator.
 
 ## Usage
 
