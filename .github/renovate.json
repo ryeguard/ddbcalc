@@ -16,6 +16,7 @@
   "schedule": [
     "on sundays"
   ],
+  "platformCommit": true,
   "postUpdateOptions": [
     "gomodTidy"
   ]
