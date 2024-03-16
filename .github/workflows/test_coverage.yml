@@ -1,9 +1,11 @@
+name: Build and test with coverage
+
 on:
   push:
     branches: ["main"]
 
 jobs:
-  build:
+  build-and-test-with-coverage:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
