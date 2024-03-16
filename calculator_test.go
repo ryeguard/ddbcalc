@@ -99,7 +99,6 @@ func TestSizeInBytes(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			fmt.Println(tt.name)
 			actual, err := sizeInBytes(&tt.item)
 			if err != nil {
 				t.Fatal(err)
