@@ -14,7 +14,27 @@ For more info, please see the blog post at [rygard.se](https://www.rygard.se/blo
 
 ## Usage
 
-The `StructSizeInBytes` function calculates the size of a struct in bytes. It may be used as follows:
+### CLI
+
+The `ddbcalc` command-line tool can be used to calculate the size of a json file from the terminal.
+
+Install the tool with the following command:
+
+```sh
+go install github.com/ryeguard/ddbcalc/cmd/ddbcalc@latest
+```
+
+You can then run the tool with the following command:
+
+```sh
+ddbcalc -file path/to/file.json
+```
+
+### Package
+
+By importing `github.com/ryeguard/ddbcalc`, you can use the modules's exported functions in your Go code.
+
+For example, the `StructSizeInBytes` function calculates the size of a struct in bytes. It may be used as follows:
 
 ```go
 package main
@@ -56,7 +76,7 @@ You can run the example above with the following command:
 go run example/basic/main.go
 ```
 
-For more examples, see the [examples](./examples) directory and also check out the tests in all `*_test.go` files.
+For more examples, see the [examples](./examples) directory and also check out the tests in any [`*_test.go`](https://github.com/search?q=repo%3Aryeguard%2Fddbcalc+path%3A*_test.go&type=code) files.
 
 ## Contributing
 
