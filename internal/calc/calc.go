@@ -1,13 +1,11 @@
-package ddbcalc
+package calc
 
 import (
 	"fmt"
 
-	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 )
 
-const SizeLimitInBytes = 400_000 // 400 KB
 
 const (
 	overheadMemberM = 3 // 3 byte
@@ -15,32 +13,7 @@ const (
 	overheadElement = 1 // 1 byte
 )
 
-// MapSizeInBytes returns the size of a map of AttributeValue in bytes.
-func MapSizeInBytes(m map[string]types.AttributeValue) (int, error) {
-	size := 0
-	for k, v := range m {
-		size += len([]byte(k))
-		s, err := sizeInBytes(&v)
-		if err != nil {
-			return 0, err
-		}
-		size += s
-	}
-	return size, nil
-}
-
-// StructSizeInBytes returns the size of a struct in bytes.
-// It is a convenience function as an alternative to first calling attributevalue.MarshalMap and then MapSizeInBytes.
-func StructSizeInBytes(s interface{}) (int, error) {
-	av, err := attributevalue.MarshalMap(s)
-	if err != nil {
-		return 0, err
-	}
-
-	return MapSizeInBytes(av)
-}
-
-func sizeInBytes(av *types.AttributeValue) (int, error) {
+func SizeInBytes(av *types.AttributeValue) (int, error) {
 	if av == nil {
 		return 0, nil
 	}
@@ -67,7 +40,7 @@ func sizeInBytes(av *types.AttributeValue) (int, error) {
 	case *types.AttributeValueMemberL:
 		size := overheadMemberL
 		for _, v := range _av.Value {
-			s, err := sizeInBytes(&v)
+			s, err := SizeInBytes(&v)
 			if err != nil {
 				return 0, err
 			}
@@ -79,7 +52,7 @@ func sizeInBytes(av *types.AttributeValue) (int, error) {
 		size := overheadMemberM
 		for k, v := range _av.Value {
 			size += len(k)
-			s, err := sizeInBytes(&v)
+			s, err := SizeInBytes(&v)
 			if err != nil {
 				return 0, err
 			}
