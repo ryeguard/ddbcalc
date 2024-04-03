@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.3.0](https://github.com/ryeguard/ddbcalc/compare/v0.2.0...v0.3.0) (2024-04-03)
+
+
+### Features
+
+* **cli:** minimal cli ([f7140f0](https://github.com/ryeguard/ddbcalc/commit/f7140f0cfead0490b4c88e211f6f1212f215227b))
+
+
+### Bug Fixes
+
+* **deps:** update aws-sdk-go-v2 monorepo ([#20](https://github.com/ryeguard/ddbcalc/issues/20)) ([5bdf449](https://github.com/ryeguard/ddbcalc/commit/5bdf4499640e14e931ececd60a4d2024e7115a51))
+* **deps:** update aws-sdk-go-v2 monorepo ([#22](https://github.com/ryeguard/ddbcalc/issues/22)) ([460df54](https://github.com/ryeguard/ddbcalc/commit/460df54e13124c3f90f4da0c91a63474720b2911))
+
 ## [0.2.0](https://github.com/ryeguard/ddbcalc/compare/v0.1.0...v0.2.0) (2024-03-17)
 
 
