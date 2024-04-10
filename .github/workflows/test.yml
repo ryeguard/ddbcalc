@@ -1,8 +1,6 @@
-name: Build and test
+name: build and test
 
-on:
-  pull_request:
-    branches: ["main"]
+on: pull_request
 
 jobs:
   build-and-test:
