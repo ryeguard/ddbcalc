@@ -6,7 +6,6 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 )
 
-
 const (
 	overheadMemberM = 3 // 3 byte
 	overheadMemberL = 3 // 3 byte
@@ -76,4 +75,8 @@ func SizeInBytes(av *types.AttributeValue) (int, error) {
 	default:
 		return 0, fmt.Errorf("unknown type: %T", _av)
 	}
+}
+
+func unused() {
+	// This is a dummy function to test linting
 }
