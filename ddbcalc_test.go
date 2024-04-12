@@ -48,6 +48,7 @@ func TestStructSizeInBytes(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
+
 			if got != tc.want {
 				t.Errorf("got %d; want %d", got, tc.want)
 			}
@@ -133,6 +134,7 @@ func TestStructSizeInBytesOfTypes(t *testing.T) { //nolint:funlen
 			if err != nil {
 				t.Fatal(err)
 			}
+			
 			if got != tc.want {
 				t.Errorf("got %d; want %d", got, tc.want)
 			}
