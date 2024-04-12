@@ -4,6 +4,13 @@ linters-settings:
     check-blank: true
   govet:
     enable-all: true
+  depguard:
+    rules:
+      main:
+        allow:
+          - $gostd
+          - github.com/ryeguard/ddbcalc
+          - github.com/aws/aws-sdk-go-v2
   gosec:
     excludes:
       - G601 # false positive since Go 1.22
