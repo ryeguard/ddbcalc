@@ -12,3 +12,4 @@ linters:
   enable-all: true
   disable:
     - forbidigo
+    - gofumpt
