@@ -10,8 +10,8 @@ import (
 
 func TestStructSizeInBytes(t *testing.T) {
 	var tests = []struct {
-		name string
 		item interface{}
+		name string
 		want int
 	}{
 		{
@@ -57,8 +57,8 @@ func TestStructSizeInBytes(t *testing.T) {
 
 func TestStructSizeInBytesOfTypes(t *testing.T) { //nolint:funlen
 	var tests = []struct {
-		typ  string
 		item interface{}
+		typ  string
 		want int
 	}{
 		{
