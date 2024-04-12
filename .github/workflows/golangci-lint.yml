@@ -3,7 +3,6 @@ on: pull_request
 
 permissions:
   contents: read
-  pull-requests: read
   checks: write
 
 jobs:
@@ -20,4 +19,3 @@ jobs:
         uses: golangci/golangci-lint-action@v4
         with:
           version: v1.54
-          only-new-issues: true
