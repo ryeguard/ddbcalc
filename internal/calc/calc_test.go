@@ -89,7 +89,7 @@ func Test_mapSize(t *testing.T) {
 	}
 }
 
-func TestSizeInBytes(t *testing.T) {
+func TestSizeInBytesOfBasicTypes(t *testing.T) {
 	var tests = []struct {
 		name     string
 		item     types.AttributeValue
@@ -125,6 +125,27 @@ func TestSizeInBytes(t *testing.T) {
 			item:     &types.AttributeValueMemberNULL{Value: true},
 			expected: 1,
 		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			actual, err := SizeInBytes(&tc.item)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if actual != tc.expected {
+				t.Errorf("got %d; want %d", actual, tc.expected)
+			}
+		})
+	}
+}
+
+func TestSizeInBytesOfSet(t *testing.T) {
+	var tests = []struct {
+		name     string
+		item     types.AttributeValue
+		expected int
+	}{
 		{
 			name: "binary set",
 			item: &types.AttributeValueMemberBS{Value: [][]byte{
