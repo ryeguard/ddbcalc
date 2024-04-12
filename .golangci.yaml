@@ -15,6 +15,7 @@ linters-settings:
     excludes:
       - G601 # false positive since Go 1.22
   varnamelen:
+    max-distance: 6
     ignore-names:
       - tc # https://dave.cheney.net/2019/05/07/prefer-table-driven-tests
 
