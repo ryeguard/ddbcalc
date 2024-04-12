@@ -1,6 +1,8 @@
 package ddbcalc
 
 import (
+	"fmt"
+
 	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 	"github.com/ryeguard/ddbcalc/internal/calc"
@@ -13,12 +15,15 @@ func MapSizeInBytes(m map[string]types.AttributeValue) (int, error) {
 	size := 0
 	for k, v := range m {
 		size += len([]byte(k))
+
 		s, err := calc.SizeInBytes(&v)
 		if err != nil {
-			return 0, err
+			return 0, fmt.Errorf("size in bytes: %w", err)
 		}
+
 		size += s
 	}
+
 	return size, nil
 }
 
@@ -27,7 +32,7 @@ func MapSizeInBytes(m map[string]types.AttributeValue) (int, error) {
 func StructSizeInBytes(s interface{}) (int, error) {
 	av, err := attributevalue.MarshalMap(s)
 	if err != nil {
-		return 0, err
+		return 0, fmt.Errorf("marshal map: %w", err)
 	}
 
 	return MapSizeInBytes(av)

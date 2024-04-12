@@ -11,15 +11,88 @@ func TestSizeInBytesNil(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+
 	if actual != 0 {
 		t.Errorf("got %d; want 0", actual)
 	}
 }
 
-func TestSizeInBytes(t *testing.T) {
+func Test_listSize(t *testing.T) {
 	var tests = []struct {
+		item     *types.AttributeValueMemberL
 		name     string
+		expected int
+	}{
+		{
+			name:     "empty list",
+			item:     &types.AttributeValueMemberL{Value: []types.AttributeValue{}},
+			expected: 3,
+		},
+		{
+			name: "list",
+			item: &types.AttributeValueMemberL{Value: []types.AttributeValue{
+				&types.AttributeValueMemberS{Value: "abc"},
+				&types.AttributeValueMemberN{Value: "123"},
+				&types.AttributeValueMemberB{Value: []byte{1, 2, 3}},
+			}},
+			expected: 3 + // list overhead
+				3*(3+1), // 3 elements 3 bytes each + 1 byte overhead
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			actual, err := listSize(tc.item)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if actual != tc.expected {
+				t.Errorf("got %d; want %d", actual, tc.expected)
+			}
+		})
+	}
+}
+
+func Test_mapSize(t *testing.T) {
+	var tests = []struct {
+		item     *types.AttributeValueMemberM
+		name     string
+		expected int
+	}{
+		{
+			name:     "empty map",
+			item:     &types.AttributeValueMemberM{Value: map[string]types.AttributeValue{}},
+			expected: 3,
+		},
+		{
+			name: "map",
+			item: &types.AttributeValueMemberM{Value: map[string]types.AttributeValue{
+				"s": &types.AttributeValueMemberS{Value: "abc"},
+				"n": &types.AttributeValueMemberN{Value: "123"},
+				"b": &types.AttributeValueMemberB{Value: []byte{1, 2, 3}},
+			}},
+			expected: 3 + // map overhead
+				3*(1+3+1), // 3 elements 1 byte key + 3 bytes value + 1 byte overhead
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			actual, err := mapSize(tc.item)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if actual != tc.expected {
+				t.Errorf("got %d; want %d", actual, tc.expected)
+			}
+		})
+	}
+}
+
+func TestSizeInBytesOfBasicTypes(t *testing.T) {
+	var tests = []struct {
 		item     types.AttributeValue
+		name     string
 		expected int
 	}{
 		{
@@ -52,6 +125,27 @@ func TestSizeInBytes(t *testing.T) {
 			item:     &types.AttributeValueMemberNULL{Value: true},
 			expected: 1,
 		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			actual, err := SizeInBytes(&tc.item)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if actual != tc.expected {
+				t.Errorf("got %d; want %d", actual, tc.expected)
+			}
+		})
+	}
+}
+
+func TestSizeInBytesOfSet(t *testing.T) {
+	var tests = []struct {
+		item     types.AttributeValue
+		name     string
+		expected int
+	}{
 		{
 			name: "binary set",
 			item: &types.AttributeValueMemberBS{Value: [][]byte{
@@ -60,26 +154,6 @@ func TestSizeInBytes(t *testing.T) {
 				{7, 8, 9},
 			}},
 			expected: 9,
-		},
-		{
-			name: "list",
-			item: &types.AttributeValueMemberL{Value: []types.AttributeValue{
-				&types.AttributeValueMemberS{Value: "abc"},
-				&types.AttributeValueMemberN{Value: "123"},
-				&types.AttributeValueMemberB{Value: []byte{1, 2, 3}},
-			}},
-			expected: 3 + // list overhead
-				3*(3+1), // 3 elements 3 bytes each + 1 byte overhead
-		},
-		{
-			name: "map",
-			item: &types.AttributeValueMemberM{Value: map[string]types.AttributeValue{
-				"s": &types.AttributeValueMemberS{Value: "abc"},
-				"n": &types.AttributeValueMemberN{Value: "123"},
-				"b": &types.AttributeValueMemberB{Value: []byte{1, 2, 3}},
-			}},
-			expected: 3 + // map overhead
-				3*(1+3+1), // 3 elements 1 byte key + 3 bytes value + 1 byte overhead
 		},
 		{
 			name:     "number set",
@@ -93,14 +167,14 @@ func TestSizeInBytes(t *testing.T) {
 		},
 	}
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			actual, err := SizeInBytes(&tt.item)
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			actual, err := SizeInBytes(&tc.item)
 			if err != nil {
 				t.Fatal(err)
 			}
-			if actual != tt.expected {
-				t.Errorf("got %d; want %d", actual, tt.expected)
+			if actual != tc.expected {
+				t.Errorf("got %d; want %d", actual, tc.expected)
 			}
 		})
 	}

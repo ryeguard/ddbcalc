@@ -10,8 +10,8 @@ import (
 
 func TestStructSizeInBytes(t *testing.T) {
 	var tests = []struct {
-		name string
 		item interface{}
+		name string
 		want int
 	}{
 		{
@@ -42,23 +42,23 @@ func TestStructSizeInBytes(t *testing.T) {
 		},
 	}
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got, err := StructSizeInBytes(tt.item)
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			got, err := StructSizeInBytes(tc.item)
 			if err != nil {
 				t.Fatal(err)
 			}
-			if got != tt.want {
-				t.Errorf("got %d; want %d", got, tt.want)
+			if got != tc.want {
+				t.Errorf("got %d; want %d", got, tc.want)
 			}
 		})
 	}
 }
 
-func TestStrctSizeInBytesOfTypes(t *testing.T) {
+func TestStructSizeInBytesOfTypes(t *testing.T) { //nolint:funlen
 	var tests = []struct {
-		typ  string
 		item interface{}
+		typ  string
 		want int
 	}{
 		{
@@ -110,31 +110,31 @@ func TestStrctSizeInBytesOfTypes(t *testing.T) {
 		},
 	}
 
-	for _, tt := range tests {
-		t.Run(tt.typ, func(t *testing.T) {
-			b, err := json.MarshalIndent(tt.item, "", "\t")
+	for _, tc := range tests {
+		t.Run(tc.typ, func(t *testing.T) {
+			b, err := json.MarshalIndent(tc.item, "", "\t")
 			if err != nil {
 				t.Fatal(err)
 			}
 
-			gotJson := string(b)
+			gotJSON := string(b)
 
-			f, err := os.ReadFile(path.Join("testdata", fmt.Sprintf("test_%s.json", tt.typ)))
+			f, err := os.ReadFile(path.Join("testdata", fmt.Sprintf("test_%s.json", tc.typ)))
 			if err != nil {
 				t.Fatal(err)
 			}
 
-			wantJson := string(f)
-			if gotJson != wantJson {
-				t.Errorf("got\n%s\n; want\n%s\n", gotJson, wantJson)
+			wantJSON := string(f)
+			if gotJSON != wantJSON {
+				t.Errorf("got\n%s\n; want\n%s\n", gotJSON, wantJSON)
 			}
 
-			got, err := StructSizeInBytes(tt.item)
+			got, err := StructSizeInBytes(tc.item)
 			if err != nil {
 				t.Fatal(err)
 			}
-			if got != tt.want {
-				t.Errorf("got %d; want %d", got, tt.want)
+			if got != tc.want {
+				t.Errorf("got %d; want %d", got, tc.want)
 			}
 		})
 	}

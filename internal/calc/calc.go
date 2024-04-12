@@ -6,7 +6,6 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 )
 
-
 const (
 	overheadMemberM = 3 // 3 byte
 	overheadMemberL = 3 // 3 byte
@@ -36,44 +35,61 @@ func SizeInBytes(av *types.AttributeValue) (int, error) {
 		for _, v := range _av.Value {
 			size += len(v)
 		}
+
 		return size, nil
 	case *types.AttributeValueMemberL:
-		size := overheadMemberL
-		for _, v := range _av.Value {
-			s, err := SizeInBytes(&v)
-			if err != nil {
-				return 0, err
-			}
-			size += s
-			size += overheadElement
-		}
-		return size, nil
+		return listSize(_av)
 	case *types.AttributeValueMemberM:
-		size := overheadMemberM
-		for k, v := range _av.Value {
-			size += len(k)
-			s, err := SizeInBytes(&v)
-			if err != nil {
-				return 0, err
-			}
-			size += s
-			size += overheadElement
-		}
-		return size, nil
-
+		return mapSize(_av)
 	case *types.AttributeValueMemberNS:
 		size := 0
 		for _, v := range _av.Value {
 			size += len(v)
 		}
+
 		return size, nil
 	case *types.AttributeValueMemberSS:
 		size := 0
 		for _, v := range _av.Value {
 			size += len(v)
 		}
+
 		return size, nil
 	default:
 		return 0, fmt.Errorf("unknown type: %T", _av)
 	}
+}
+
+func listSize(l *types.AttributeValueMemberL) (int, error) {
+	size := overheadMemberL
+
+	for _, v := range l.Value {
+		s, err := SizeInBytes(&v)
+		if err != nil {
+			return 0, err
+		}
+
+		size += s
+		size += overheadElement
+	}
+
+	return size, nil
+}
+
+func mapSize(m *types.AttributeValueMemberM) (int, error) {
+	size := overheadMemberM
+
+	for k, v := range m.Value {
+		size += len(k)
+
+		s, err := SizeInBytes(&v)
+		if err != nil {
+			return 0, err
+		}
+
+		size += s
+		size += overheadElement
+	}
+
+	return size, nil
 }
