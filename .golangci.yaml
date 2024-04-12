@@ -1,0 +1,12 @@
+linters-settings:
+  errcheck:
+    check-type-assertions: true
+    check-blank: true
+  govet:
+    enable-all: true
+  varnamelen:
+    ignore-names:
+      - tc # https://dave.cheney.net/2019/05/07/prefer-table-driven-tests
+
+linters:
+  enable-all: true
