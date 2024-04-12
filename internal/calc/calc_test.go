@@ -46,6 +46,7 @@ func Test_listSize(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
+
 			if actual != tc.expected {
 				t.Errorf("got %d; want %d", actual, tc.expected)
 			}
@@ -82,6 +83,7 @@ func Test_mapSize(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
+
 			if actual != tc.expected {
 				t.Errorf("got %d; want %d", actual, tc.expected)
 			}
@@ -133,6 +135,7 @@ func TestSizeInBytesOfBasicTypes(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
+
 			if actual != tc.expected {
 				t.Errorf("got %d; want %d", actual, tc.expected)
 			}
@@ -173,6 +176,7 @@ func TestSizeInBytesOfSet(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
+
 			if actual != tc.expected {
 				t.Errorf("got %d; want %d", actual, tc.expected)
 			}
