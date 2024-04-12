@@ -40,7 +40,7 @@ func SizeInBytes(av *types.AttributeValue) (int, error) {
 	case *types.AttributeValueMemberL:
 		return listSize(_av)
 	case *types.AttributeValueMemberM:
-		return matSize(_av)
+		return mapSize(_av)
 	case *types.AttributeValueMemberNS:
 		size := 0
 		for _, v := range _av.Value {
@@ -73,7 +73,7 @@ func listSize(l *types.AttributeValueMemberL) (int, error) {
 	return size, nil
 }
 
-func matSize(m *types.AttributeValueMemberM) (int, error) {
+func mapSize(m *types.AttributeValueMemberM) (int, error) {
 	size := overheadMemberM
 	for k, v := range m.Value {
 		size += len(k)
