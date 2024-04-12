@@ -61,8 +61,8 @@ func SizeInBytes(av *types.AttributeValue) (int, error) {
 }
 
 func listSize(l *types.AttributeValueMemberL) (int, error) {
-
 	size := overheadMemberL
+
 	for _, v := range l.Value {
 		s, err := SizeInBytes(&v)
 		if err != nil {
@@ -77,8 +77,8 @@ func listSize(l *types.AttributeValueMemberL) (int, error) {
 }
 
 func mapSize(m *types.AttributeValueMemberM) (int, error) {
-
 	size := overheadMemberM
+
 	for k, v := range m.Value {
 		size += len(k)
 
@@ -92,8 +92,4 @@ func mapSize(m *types.AttributeValueMemberM) (int, error) {
 	}
 
 	return size, nil
-}
-
-func unused() {
-	// This is a dummy function to test linting
 }
