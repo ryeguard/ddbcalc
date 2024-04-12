@@ -11,6 +11,7 @@ func TestReadJSON(t *testing.T) {
 		if err == nil {
 			t.Fatalf("readJSON: expected error, got nil")
 		}
+
 		if !strings.HasPrefix(err.Error(), "open") {
 			t.Fatalf("readJSON: expected error to start with 'open', got %v", err)
 		}
@@ -21,6 +22,7 @@ func TestReadJSON(t *testing.T) {
 		if err == nil {
 			t.Fatalf("readJSON: expected error, got nil")
 		}
+
 		if !strings.HasPrefix(err.Error(), "unmarshal") {
 			t.Fatalf("readJSON: expected error to start with 'unmarshal', got %v", err)
 		}
@@ -31,9 +33,11 @@ func TestReadJSON(t *testing.T) {
 		if err != nil {
 			t.Fatalf("readJSON: %v", err)
 		}
+
 		if len(actual) == 0 {
 			t.Fatalf("readJSON: expected non-empty map, got empty map")
 		}
+
 		if _, ok := actual["IntField"]; !ok {
 			t.Fatalf("readJSON: expected key IntField, got %v", actual)
 		}
