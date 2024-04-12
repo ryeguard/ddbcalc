@@ -43,6 +43,7 @@ func SizeInBytes(av *types.AttributeValue) (int, error) {
 			if err != nil {
 				return 0, err
 			}
+
 			size += s
 			size += overheadElement
 		}
@@ -55,6 +56,7 @@ func SizeInBytes(av *types.AttributeValue) (int, error) {
 			if err != nil {
 				return 0, err
 			}
+			
 			size += s
 			size += overheadElement
 		}

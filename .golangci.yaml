@@ -4,6 +4,9 @@ linters-settings:
     check-blank: true
   govet:
     enable-all: true
+  gosec:
+    excludes:
+      - G601 # false positive since Go 1.22
   varnamelen:
     ignore-names:
       - tc # https://dave.cheney.net/2019/05/07/prefer-table-driven-tests
@@ -16,17 +19,17 @@ linters:
     - ineffassign # default
     - staticcheck # default
     - unused # default
-    - funlen
     - depguard
     - errname
     - exhaustive
+    - funlen
     - gomnd
     - gosec
     - ireturn
     - lll
     - nilerr
     - unparam
+    - varnamelen
     - whitespace
     - wrapcheck
-    - varnamelen
     - wsl
