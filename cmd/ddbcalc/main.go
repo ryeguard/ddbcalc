@@ -19,13 +19,14 @@ func readJSON(file string) (map[string]interface{}, error) {
 	}
 	defer f.Close()
 
-	b, err := io.ReadAll(f)
+	bytes, err := io.ReadAll(f)
 	if err != nil {
 		return nil, fmt.Errorf("read: %w", err)
 	}
 
 	var data map[string]interface{}
-	err = json.Unmarshal(b, &data)
+
+	err = json.Unmarshal(bytes, &data)
 	if err != nil {
 		return nil, fmt.Errorf("unmarshal: %w", err)
 	}
