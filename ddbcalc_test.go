@@ -117,16 +117,16 @@ func TestStrctSizeInBytesOfTypes(t *testing.T) {
 				t.Fatal(err)
 			}
 
-			gotJson := string(b)
+			gotJSON := string(b)
 
 			f, err := os.ReadFile(path.Join("testdata", fmt.Sprintf("test_%s.json", tt.typ)))
 			if err != nil {
 				t.Fatal(err)
 			}
 
-			wantJson := string(f)
-			if gotJson != wantJson {
-				t.Errorf("got\n%s\n; want\n%s\n", gotJson, wantJson)
+			wantJSON := string(f)
+			if gotJSON != wantJSON {
+				t.Errorf("got\n%s\n; want\n%s\n", gotJSON, wantJSON)
 			}
 
 			got, err := StructSizeInBytes(tt.item)
