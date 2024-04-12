@@ -19,8 +19,8 @@ func TestSizeInBytesNil(t *testing.T) {
 
 func Test_listSize(t *testing.T) {
 	var tests = []struct {
-		name     string
 		item     *types.AttributeValueMemberL
+		name     string
 		expected int
 	}{
 		{
@@ -55,8 +55,8 @@ func Test_listSize(t *testing.T) {
 
 func Test_mapSize(t *testing.T) {
 	var tests = []struct {
-		name     string
 		item     *types.AttributeValueMemberM
+		name     string
 		expected int
 	}{
 		{
@@ -91,8 +91,8 @@ func Test_mapSize(t *testing.T) {
 
 func TestSizeInBytesOfBasicTypes(t *testing.T) {
 	var tests = []struct {
-		name     string
 		item     types.AttributeValue
+		name     string
 		expected int
 	}{
 		{
@@ -142,8 +142,8 @@ func TestSizeInBytesOfBasicTypes(t *testing.T) {
 
 func TestSizeInBytesOfSet(t *testing.T) {
 	var tests = []struct {
-		name     string
 		item     types.AttributeValue
+		name     string
 		expected int
 	}{
 		{
