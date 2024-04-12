@@ -35,6 +35,7 @@ func SizeInBytes(av *types.AttributeValue) (int, error) {
 		for _, v := range _av.Value {
 			size += len(v)
 		}
+		
 		return size, nil
 	case *types.AttributeValueMemberL:
 		size := overheadMemberL
@@ -47,6 +48,7 @@ func SizeInBytes(av *types.AttributeValue) (int, error) {
 			size += s
 			size += overheadElement
 		}
+
 		return size, nil
 	case *types.AttributeValueMemberM:
 		size := overheadMemberM
@@ -56,10 +58,11 @@ func SizeInBytes(av *types.AttributeValue) (int, error) {
 			if err != nil {
 				return 0, err
 			}
-			
+
 			size += s
 			size += overheadElement
 		}
+
 		return size, nil
 
 	case *types.AttributeValueMemberNS:

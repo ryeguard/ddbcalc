@@ -11,6 +11,7 @@ func TestSizeInBytesNil(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+
 	if actual != 0 {
 		t.Errorf("got %d; want 0", actual)
 	}
