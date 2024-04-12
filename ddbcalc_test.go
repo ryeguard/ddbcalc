@@ -55,7 +55,7 @@ func TestStructSizeInBytes(t *testing.T) {
 	}
 }
 
-func TestStructSizeInBytesOfTypes(t *testing.T) {
+func TestStructSizeInBytesOfTypes(t *testing.T) { //nolint:funlen
 	var tests = []struct {
 		typ  string
 		item interface{}
