@@ -9,17 +9,24 @@ linters-settings:
       - tc # https://dave.cheney.net/2019/05/07/prefer-table-driven-tests
 
 linters:
-  enable-all: true
-  disable:
-    - forbidigo
-    - gofumpt
-    - deadcode # Deprecated
-    - exhaustivestruct # Deprecated
-    - golint # Deprecated
-    - ifshort # Deprecated
-    - interfacer # Deprecated
-    - maligned # Deprecated
-    - nosnakecase # Deprecated
-    - scopelint # Deprecated
-    - structcheck # Deprecated
-    - varcheck # Deprecated
+  enable:
+    - errcheck # default
+    - gosimple # default
+    - govet # default
+    - ineffassign # default
+    - staticcheck # default
+    - unused # default
+    - funlen
+    - depguard
+    - errname
+    - exhaustive
+    - gomnd
+    - gosec
+    - ireturn
+    - lll
+    - nilerr
+    - unparam
+    - whitespace
+    - wrapcheck
+    - varnamelen
+    - wsl
