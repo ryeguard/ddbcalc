@@ -25,6 +25,7 @@ func readJSON(file string) (map[string]interface{}, error) {
 	}
 
 	var data map[string]interface{}
+
 	err = json.Unmarshal(b, &data)
 	if err != nil {
 		return nil, fmt.Errorf("unmarshal: %w", err)

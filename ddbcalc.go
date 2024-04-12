@@ -13,10 +13,12 @@ func MapSizeInBytes(m map[string]types.AttributeValue) (int, error) {
 	size := 0
 	for k, v := range m {
 		size += len([]byte(k))
+
 		s, err := calc.SizeInBytes(&v)
 		if err != nil {
 			return 0, err
 		}
+
 		size += s
 	}
 	return size, nil
