@@ -83,6 +83,13 @@ func TestStructSizeInBytesOfTypes(t *testing.T) { //nolint:funlen
 			want: 3 + 12 + 3*(1+1),
 		},
 		{
+			typ: "[]int",
+			item: struct{ IntsField []int }{
+				IntsField: []int{1, 2, 3},
+			},
+			want: 3 + 9 + 3*(1+1),
+		},
+		{
 			typ:  "bool",
 			item: struct{ BoolField bool }{BoolField: true},
 			want: 9 + 1,
@@ -134,7 +141,7 @@ func TestStructSizeInBytesOfTypes(t *testing.T) { //nolint:funlen
 			if err != nil {
 				t.Fatal(err)
 			}
-			
+
 			if got != tc.want {
 				t.Errorf("got %d; want %d", got, tc.want)
 			}
