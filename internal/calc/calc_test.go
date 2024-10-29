@@ -6,7 +6,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 )
 
-func TestSizeInBytesNil(t *testing.T) {
+func TestSizeOfNil(t *testing.T) {
 	actual := SizeInBytes(nil)
 
 	if actual != 0 {
@@ -82,7 +82,7 @@ func Test_mapSize(t *testing.T) {
 	}
 }
 
-func TestSizeInBytesOfBasicTypes(t *testing.T) {
+func TestSizeOfBasicTypes(t *testing.T) {
 	var tests = []struct {
 		item     types.AttributeValue
 		name     string
@@ -156,7 +156,7 @@ func TestSizeInBytesOfBasicTypes(t *testing.T) {
 	}
 }
 
-func TestSizeInBytesOfSet(t *testing.T) {
+func TestSizeOfSet(t *testing.T) {
 	var tests = []struct {
 		item     types.AttributeValue
 		name     string
@@ -213,7 +213,7 @@ func TestSizeInBytesOfSet(t *testing.T) {
 	}
 }
 
-func TestSizeInBytesOfList(t *testing.T) {
+func TestSizeOfList(t *testing.T) {
 	var tests = []struct {
 		item     types.AttributeValue
 		name     string
@@ -258,7 +258,7 @@ func TestSizeInBytesOfList(t *testing.T) {
 	}
 }
 
-func TestSizeInBytesOfMap(t *testing.T) {
+func TestSizeOfMap(t *testing.T) {
 	var tests = []struct {
 		item     types.AttributeValue
 		name     string
