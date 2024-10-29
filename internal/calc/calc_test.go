@@ -90,12 +90,61 @@ func TestSizeOfString(t *testing.T) {
 	}{
 		{
 			name:     "S (string) 1",
+			item:     &types.AttributeValueMemberS{},
+			expected: 0,
+		},
+		{
+			name:     "S (string) 2",
+			item:     &types.AttributeValueMemberS{Value: ""},
+			expected: 0,
+		},
+		{
+			name:     "S (string) 3",
 			item:     &types.AttributeValueMemberS{Value: "abc"},
 			expected: 3,
 		},
 		{
-			name:     "S (string) 2",
+			name:     "S (string) 4",
 			item:     &types.AttributeValueMemberS{Value: "12345"},
+			expected: 5,
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			actual := SizeInBytes(&tc.item)
+
+			if actual != tc.expected {
+				t.Errorf("got %d; want %d", actual, tc.expected)
+			}
+		})
+	}
+}
+
+func TestSizeOfNumber(t *testing.T) {
+	var tests = []struct {
+		item     types.AttributeValue
+		name     string
+		expected int
+	}{
+		{
+			name:     "N (number) 1",
+			item:     &types.AttributeValueMemberN{},
+			expected: 0,
+		},
+		{
+			name:     "N (number) 2",
+			item:     &types.AttributeValueMemberN{Value: ""},
+			expected: 0,
+		},
+		{
+			name:     "N (number) 3",
+			item:     &types.AttributeValueMemberN{Value: "123"},
+			expected: 3,
+		},
+		{
+			name:     "N (number) 4",
+			item:     &types.AttributeValueMemberN{Value: "123.4"},
 			expected: 5,
 		},
 	}
@@ -121,16 +170,6 @@ func TestSizeOfBasicTypes(t *testing.T) {
 			name:     "nil",
 			item:     nil,
 			expected: 0,
-		},
-		{
-			name:     "N (number) 1",
-			item:     &types.AttributeValueMemberN{Value: "123"},
-			expected: 3,
-		},
-		{
-			name:     "N (number) 2",
-			item:     &types.AttributeValueMemberN{Value: "123.4"},
-			expected: 5,
 		},
 		{
 			name:     "B (binary) 1",
