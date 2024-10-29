@@ -7,10 +7,7 @@ import (
 )
 
 func TestSizeInBytesNil(t *testing.T) {
-	actual, err := SizeInBytes(nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	actual := SizeInBytes(nil)
 
 	if actual != 0 {
 		t.Errorf("got %d; want 0", actual)
@@ -42,10 +39,7 @@ func Test_listSize(t *testing.T) {
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			actual, err := listSize(tc.item)
-			if err != nil {
-				t.Fatal(err)
-			}
+			actual := listSize(tc.item)
 
 			if actual != tc.expected {
 				t.Errorf("got %d; want %d", actual, tc.expected)
@@ -79,10 +73,7 @@ func Test_mapSize(t *testing.T) {
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			actual, err := mapSize(tc.item)
-			if err != nil {
-				t.Fatal(err)
-			}
+			actual := mapSize(tc.item)
 
 			if actual != tc.expected {
 				t.Errorf("got %d; want %d", actual, tc.expected)
@@ -131,10 +122,7 @@ func TestSizeInBytesOfBasicTypes(t *testing.T) {
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			actual, err := SizeInBytes(&tc.item)
-			if err != nil {
-				t.Fatal(err)
-			}
+			actual := SizeInBytes(&tc.item)
 
 			if actual != tc.expected {
 				t.Errorf("got %d; want %d", actual, tc.expected)
@@ -172,10 +160,7 @@ func TestSizeInBytesOfSet(t *testing.T) {
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			actual, err := SizeInBytes(&tc.item)
-			if err != nil {
-				t.Fatal(err)
-			}
+			actual := SizeInBytes(&tc.item)
 
 			if actual != tc.expected {
 				t.Errorf("got %d; want %d", actual, tc.expected)
