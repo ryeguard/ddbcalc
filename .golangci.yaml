@@ -31,7 +31,7 @@ linters:
     - errname
     - exhaustive
     - funlen
-    - gomnd
+    - mnd
     - gosec
     - ireturn
     - lll
