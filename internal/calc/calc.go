@@ -1,8 +1,6 @@
 package calc
 
 import (
-	"fmt"
-
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 )
 
@@ -12,31 +10,29 @@ const (
 	overheadElement = 1 // 1 byte
 )
 
-func SizeInBytes(av *types.AttributeValue) (int, error) {
+func SizeInBytes(av *types.AttributeValue) int {
 	if av == nil {
-		return 0, nil
+		return 0
 	}
 
 	switch _av := (*av).(type) {
-	case nil:
-		return 0, nil
 	case *types.AttributeValueMemberS:
-		return len(_av.Value), nil
+		return len(_av.Value)
 	case *types.AttributeValueMemberN:
-		return len(_av.Value), nil
+		return len(_av.Value)
 	case *types.AttributeValueMemberB:
-		return len(_av.Value), nil
+		return len(_av.Value)
 	case *types.AttributeValueMemberBOOL:
-		return 1, nil
+		return 1
 	case *types.AttributeValueMemberNULL:
-		return 1, nil
+		return 1
 	case *types.AttributeValueMemberBS:
 		size := 0
 		for _, v := range _av.Value {
 			size += len(v)
 		}
 
-		return size, nil
+		return size
 	case *types.AttributeValueMemberL:
 		return listSize(_av)
 	case *types.AttributeValueMemberM:
@@ -47,49 +43,39 @@ func SizeInBytes(av *types.AttributeValue) (int, error) {
 			size += len(v)
 		}
 
-		return size, nil
+		return size
 	case *types.AttributeValueMemberSS:
 		size := 0
 		for _, v := range _av.Value {
 			size += len(v)
 		}
 
-		return size, nil
+		return size
 	default:
-		return 0, fmt.Errorf("unknown type: %T", _av)
+		return 0
 	}
 }
 
-func listSize(l *types.AttributeValueMemberL) (int, error) {
+func listSize(l *types.AttributeValueMemberL) int {
 	size := overheadMemberL
 
 	for _, v := range l.Value {
-		s, err := SizeInBytes(&v)
-		if err != nil {
-			return 0, err
-		}
-
-		size += s
+		size += SizeInBytes(&v)
 		size += overheadElement
 	}
 
-	return size, nil
+	return size
 }
 
-func mapSize(m *types.AttributeValueMemberM) (int, error) {
+func mapSize(m *types.AttributeValueMemberM) int {
 	size := overheadMemberM
 
 	for k, v := range m.Value {
 		size += len(k)
 
-		s, err := SizeInBytes(&v)
-		if err != nil {
-			return 0, err
-		}
-
-		size += s
+		size += SizeInBytes(&v)
 		size += overheadElement
 	}
 
-	return size, nil
+	return size
 }
