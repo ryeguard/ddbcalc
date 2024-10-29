@@ -94,27 +94,52 @@ func TestSizeInBytesOfBasicTypes(t *testing.T) {
 			expected: 0,
 		},
 		{
-			name:     "string",
+			name:     "S (string) 1",
 			item:     &types.AttributeValueMemberS{Value: "abc"},
 			expected: 3,
 		},
 		{
-			name:     "number",
+			name:     "S (string) 2",
+			item:     &types.AttributeValueMemberS{Value: "12345"},
+			expected: 5,
+		},
+		{
+			name:     "N (number) 1",
 			item:     &types.AttributeValueMemberN{Value: "123"},
 			expected: 3,
 		},
 		{
-			name:     "binary",
+			name:     "N (number) 2",
+			item:     &types.AttributeValueMemberN{Value: "123.4"},
+			expected: 5,
+		},
+		{
+			name:     "B (binary) 1",
 			item:     &types.AttributeValueMemberB{Value: []byte{1, 2, 3}},
 			expected: 3,
 		},
 		{
-			name:     "bool",
+			name:     "B (binary) 2",
+			item:     &types.AttributeValueMemberB{Value: []byte{1, 2, 3, 4, 255}},
+			expected: 5,
+		},
+		{
+			name:     "BOOL (bool) 1",
+			item:     &types.AttributeValueMemberBOOL{Value: false},
+			expected: 1,
+		},
+		{
+			name:     "BOOL (bool) 2",
 			item:     &types.AttributeValueMemberBOOL{Value: true},
 			expected: 1,
 		},
 		{
-			name:     "null",
+			name:     "NULL (null) 1",
+			item:     &types.AttributeValueMemberNULL{Value: false},
+			expected: 1,
+		},
+		{
+			name:     "NULL (null) 2",
 			item:     &types.AttributeValueMemberNULL{Value: true},
 			expected: 1,
 		},
@@ -138,7 +163,7 @@ func TestSizeInBytesOfSet(t *testing.T) {
 		expected int
 	}{
 		{
-			name: "binary set",
+			name: "BS (binary set) 1",
 			item: &types.AttributeValueMemberBS{Value: [][]byte{
 				{1, 2, 3},
 				{4, 5, 6},
@@ -147,14 +172,33 @@ func TestSizeInBytesOfSet(t *testing.T) {
 			expected: 9,
 		},
 		{
-			name:     "number set",
+			name: "BS (binary set) 2",
+			item: &types.AttributeValueMemberBS{Value: [][]byte{
+				{1, 253},
+				{2, 254},
+				{3, 255},
+			}},
+			expected: 6,
+		},
+		{
+			name:     "NS (number set) 1",
 			item:     &types.AttributeValueMemberNS{Value: []string{"1", "2", "3"}},
 			expected: 3,
 		},
 		{
-			name:     "string set",
+			name:     "NS (number set) 2",
+			item:     &types.AttributeValueMemberNS{Value: []string{"1", "2", "3", "4.5"}},
+			expected: 6,
+		},
+		{
+			name:     "SS (string set) 1",
 			item:     &types.AttributeValueMemberSS{Value: []string{"a", "b", "c"}},
 			expected: 3,
+		},
+		{
+			name:     "SS (string set) 2",
+			item:     &types.AttributeValueMemberSS{Value: []string{"a", "b", "c", "d"}},
+			expected: 4,
 		},
 	}
 
@@ -167,4 +211,109 @@ func TestSizeInBytesOfSet(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestSizeInBytesOfList(t *testing.T) {
+	var tests = []struct {
+		item     types.AttributeValue
+		name     string
+		expected int
+	}{
+		{
+			name: "L (list) - empty",
+			item: &types.AttributeValueMemberL{
+				Value: []types.AttributeValue{},
+			},
+			expected: 3,
+		},
+		{
+			name: "L (list) - single BOOL value",
+			item: &types.AttributeValueMemberL{
+				Value: []types.AttributeValue{
+					&types.AttributeValueMemberBOOL{Value: false},
+				},
+			},
+			expected: 5,
+		},
+		{
+			name: "L (list) - two BOOL values",
+			item: &types.AttributeValueMemberL{
+				Value: []types.AttributeValue{
+					&types.AttributeValueMemberBOOL{Value: false},
+					&types.AttributeValueMemberBOOL{Value: true},
+				},
+			},
+			expected: 7,
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			actual := SizeInBytes(&tc.item)
+
+			if actual != tc.expected {
+				t.Errorf("got %d, want %d", actual, tc.expected)
+			}
+		})
+	}
+}
+
+func TestSizeInBytesOfMap(t *testing.T) {
+	var tests = []struct {
+		item     types.AttributeValue
+		name     string
+		expected int
+	}{
+		{
+			name:     "M (map) - empty",
+			item:     &types.AttributeValueMemberM{},
+			expected: 3,
+		},
+		{
+			name: "M (map) - empty",
+			item: &types.AttributeValueMemberM{
+				Value: map[string]types.AttributeValue{},
+			},
+			expected: 3,
+		},
+		{
+			name: "M (map) - single BOOL value",
+			item: &types.AttributeValueMemberM{
+				Value: map[string]types.AttributeValue{
+					"key1": &types.AttributeValueMemberBOOL{},
+				},
+			},
+			expected: 9,
+		},
+		{
+			name: "M (map) - single BOOL value",
+			item: &types.AttributeValueMemberM{
+				Value: map[string]types.AttributeValue{
+					"key1": &types.AttributeValueMemberBOOL{Value: false},
+				},
+			},
+			expected: 9,
+		},
+		{
+			name: "M (map) - two BOOL values",
+			item: &types.AttributeValueMemberM{
+				Value: map[string]types.AttributeValue{
+					"key1": &types.AttributeValueMemberBOOL{Value: false},
+					"key2": &types.AttributeValueMemberBOOL{Value: true},
+				},
+			},
+			expected: 15,
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			actual := SizeInBytes(&tc.item)
+
+			if actual != tc.expected {
+				t.Errorf("got %d, want %d", actual, tc.expected)
+			}
+		})
+	}
+
 }
