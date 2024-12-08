@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.4.1](https://github.com/ryeguard/ddbcalc/compare/v0.4.0...v0.4.1) (2024-12-08)
+
+
+### Bug Fixes
+
+* **deps:** update aws-sdk-go-v2 monorepo ([#56](https://github.com/ryeguard/ddbcalc/issues/56)) ([701ffc4](https://github.com/ryeguard/ddbcalc/commit/701ffc454da16ca413a624f15aebf82c1534b68a))
+* **deps:** update aws-sdk-go-v2 monorepo ([#59](https://github.com/ryeguard/ddbcalc/issues/59)) ([260cae0](https://github.com/ryeguard/ddbcalc/commit/260cae06bf45eedecaacb8e1a6dd1325fb8a4ab9))
+* **deps:** update aws-sdk-go-v2 monorepo ([#60](https://github.com/ryeguard/ddbcalc/issues/60)) ([f4c8564](https://github.com/ryeguard/ddbcalc/commit/f4c85642432292abd0485b6f7a330177c03727a0))
+* **deps:** update aws-sdk-go-v2 monorepo ([#61](https://github.com/ryeguard/ddbcalc/issues/61)) ([ca20df5](https://github.com/ryeguard/ddbcalc/commit/ca20df52c8263933311d199bc006857b50fbdc27))
+* **deps:** update aws-sdk-go-v2 monorepo ([#62](https://github.com/ryeguard/ddbcalc/issues/62)) ([e7696b8](https://github.com/ryeguard/ddbcalc/commit/e7696b81e3b0946a8c26163a7fbf241aed5306a4))
+
 ## [0.3.1](https://github.com/ryeguard/ddbcalc/compare/v0.3.0...v0.3.1) (2024-06-02)
 
 
