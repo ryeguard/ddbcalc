@@ -13,18 +13,17 @@ import (
 var fileFlag = flag.String("file", "", "The file path and name to read. Must be a json file. Required.")
 
 func readJSON(file string) (map[string]interface{}, error) {
-	fileHandle, err := os.Open(file)
+	f, err := os.Open(file)
 	if err != nil {
 		return nil, fmt.Errorf("open: %w", err)
 	}
-
 	defer func() {
-		if closeErr := fileHandle.Close(); closeErr != nil {
+		if closeErr := f.Close(); closeErr != nil {
 			err = fmt.Errorf("close: %w", closeErr)
 		}
 	}()
 
-	bytes, err := io.ReadAll(fileHandle)
+	bytes, err := io.ReadAll(f)
 	if err != nil {
 		return nil, fmt.Errorf("read: %w", err)
 	}
