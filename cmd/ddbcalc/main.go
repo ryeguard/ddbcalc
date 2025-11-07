@@ -17,7 +17,11 @@ func readJSON(file string) (map[string]interface{}, error) {
 	if err != nil {
 		return nil, fmt.Errorf("open: %w", err)
 	}
-	defer f.Close()
+	defer func() {
+		if closeErr := f.Close(); closeErr != nil {
+			err = fmt.Errorf("close: %w", closeErr)
+		}
+	}()
 
 	bytes, err := io.ReadAll(f)
 	if err != nil {
