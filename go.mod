@@ -1,6 +1,6 @@
 module github.com/ryeguard/ddbcalc
 
-go 1.22.2
+go 1.25
 
 require (
 	github.com/aws/aws-sdk-go-v2 v1.39.2
