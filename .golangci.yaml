@@ -1,10 +1,9 @@
 version: "2"
 
-exclusions:
-  paths:
-    - examples/
-
 linters:
+  exclusions:
+    paths:
+      - examples/
   enable:
     - errcheck # default
     - govet # default
