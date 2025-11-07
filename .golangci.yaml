@@ -1,26 +1,5 @@
 version: "2"
 
-linters-settings:
-  errcheck:
-    check-type-assertions: true
-    check-blank: true
-  govet:
-    enable-all: true
-  depguard:
-    rules:
-      main:
-        allow:
-          - $gostd
-          - github.com/ryeguard/ddbcalc
-          - github.com/aws/aws-sdk-go-v2
-  gosec:
-    excludes:
-      - G601 # false positive since Go 1.22
-  varnamelen:
-    max-distance: 6
-    ignore-names:
-      - tc # https://dave.cheney.net/2019/05/07/prefer-table-driven-tests
-
 linters:
   enable:
     - errcheck # default
@@ -43,3 +22,23 @@ linters:
     - whitespace
     - wrapcheck
     - wsl
+  settings:
+    errcheck:
+      check-type-assertions: true
+      check-blank: true
+    govet:
+      enable-all: true
+    depguard:
+      rules:
+        main:
+          allow:
+            - $gostd
+            - github.com/ryeguard/ddbcalc
+            - github.com/aws/aws-sdk-go-v2
+    gosec:
+      excludes:
+        - G601 # false positive since Go 1.22
+    varnamelen:
+      max-distance: 6
+      ignore-names:
+        - tc # https://dave.cheney.net/2019/05/07/prefer-table-driven-tests
