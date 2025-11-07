@@ -3,9 +3,10 @@ version: "2"
 linters:
   enable:
     - errcheck # default
+    - gosimple # default
     - govet # default
     - ineffassign # default
-    - staticcheck # default (includes gosimple checks in v2)
+    - staticcheck # default
     - unused # default
     - depguard
     - errname
