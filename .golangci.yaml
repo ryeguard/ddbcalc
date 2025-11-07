@@ -1,9 +1,5 @@
 version: "2"
 
-exclusions:
-  paths:
-    - examples/
-
 linters:
   enable:
     - errcheck # default
@@ -24,7 +20,7 @@ linters:
     - varnamelen
     - whitespace
     - wrapcheck
-    - wsl_v5
+    - wsl
   settings:
     errcheck:
       check-type-assertions: true
@@ -41,7 +37,6 @@ linters:
     gosec:
       excludes:
         - G601 # false positive since Go 1.22
-        - G304 # CLI tool designed to open user-specified files
     varnamelen:
       max-distance: 6
       ignore-names:
